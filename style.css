@@ -19,17 +19,24 @@ html, body, .scene {
   background-size: cover;
 }
 
+.player {
+  position: absolute;
+  background-image: url(./img/player.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .block {
   position: absolute;
   box-sizing: border-box;
   background-repeat: no-repeat;
 }
 
-.block--floor {
-  background-image: url(./img/blocks.png);
-}
+  .block--floor {
+    background-image: url(./img/blocks.png);
+  }
 
 
-.block--box {
-  background-image: url(./img/blocks.png);
-}
+  .block--box {
+    background-image: url(./img/blocks.png);
+  }

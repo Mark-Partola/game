@@ -1,3 +1,9 @@
-var worldElem =  document.querySelector('.world');
-var mapGenerator = new game.MapGenerator(worldElem, game.Map.stage1);
-mapGenerator.generate();
+var world = new game.World();
+
+var player = new game.Player({
+  size: world.getBlockSize()
+}).generate();
+
+world.startLive();
+
+world.addItem(player);

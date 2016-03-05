@@ -1,6 +1,9 @@
 ;(function (game) {
   "use strict";
 
+  /**
+  * Блок по параметрам
+  */
   function Block (options) {
   	this.startPosition = options.startPosition || 0;
     this.size = Math.floor(options.size);
@@ -9,6 +12,11 @@
     this.type = options.type;
   }
 
+  /**
+  * Возвращает новый сгенерированный блок.
+  * Если тип 0 - то это воздух, ничего делать не нужно.
+  * Для других типов вычисляет нужные параметры и добавляет класс.
+  */
   Block.prototype.create = function () {
     if (this.type === 0) return;
   	var block = document.createElement('div');
