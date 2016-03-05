@@ -1,57 +1,43 @@
 var blocks = {
 	0: {
     type: 'air',
-  	bgcolor: "transparent",
-  	border: "1px solid transparent"
   },
 
   1: {
   	type: 'floor',
-    bgcolor: "#943",
-  	border: "1px solid #fff"
   },
 
   2: {
   	type: 'box',
-    bgcolor: "#ff0",
-  	border: "1px solid #fff"
   }
 };
 
-var map = [
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1],
-  [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1]
-];
-
 function Block (options) {;
 	this.startPosition = options.startPosition || 0;
-  this.size = options.size + 'px';
-  this.xPos = options.size * options.xPos + 'px';
-  this.yPos = this.startPosition + (options.size * options.yPos) + 'px';
-  this.bgc = options.color || '#fff';
-  this.border = options.border;
+  this.size = Math.floor(options.size);
+  this.xPos = this.size * Math.floor(options.xPos);
+  this.yPos = this.startPosition + (options.size * options.yPos);
+  this.type = options.type;
 }
 
 Block.prototype.create = function () {
 	var block = document.createElement('div');
   block.classList.add('block');
-  block.style.top = this.yPos;
-  block.style.left = this.xPos;
-  block.style.width = this.size;
-  block.style.height = this.size;
-  block.style.backgroundColor = this.bgc;
+  block.style.top = Math.floor(this.yPos) + 'px';
+  block.style.left = this.xPos + 'px';
+  block.style.width = Math.floor(this.size) + 'px';
+  block.style.height = Math.floor(this.size) + 'px';
 
-  if (this.border) {
-  	block.style.borderRight = this.border;
-  	block.style.borderTop = this.border;
+  if (this.type) {
+    if (this.type === 1) {
+      block.classList.add('block--floor');
+      block.style.backgroundPosition = -Math.round(parseInt(this.size)) + 'px 0px';
+    } else if (this.type ===2) {
+      block.classList.add('block--box');
+      block.style.backgroundPosition = -Math.round(parseInt(this.size)) + 'px '
+        + -Math.round(parseInt(this.size)) + 'px';
+    }
+    block.style.backgroundSize = (Math.round(parseInt(this.size)) * 2) + 'px';
   }
 
   return block;
@@ -92,9 +78,8 @@ Generator.prototype.generate = function () {
         size: blockSize,
         xPos: cellIndex,
         yPos: rowIndex,
-        color: blocks[cell].bgcolor,
-        border: blocks[cell].border,
-        startPosition: differenceTop
+        startPosition: differenceTop,
+        type: cell
   		});
 
   		self._appendBlock(block.create());
@@ -108,8 +93,3 @@ Generator.prototype.generate = function () {
 Generator.prototype._appendBlock = function (block) {
 	this.world.appendChild(block);
 };
-
-
-var worldElem =  document.querySelector('.world');
-var map = new Generator(worldElem, map);
-map.generate();

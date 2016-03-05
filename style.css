@@ -10,7 +10,7 @@ html, body, .scene {
 }
 
 .world {
-  background-color: #222;
+  background-color: #000;
   height: 100%;
   position: relative;
   transition: margin-left .1s;
@@ -19,4 +19,14 @@ html, body, .scene {
 .block {
   position: absolute;
   box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+.block--floor {
+  background-image: url(./img/blocks.png);
+}
+
+
+.block--box {
+  background-image: url(./img/blocks.png);
 }
