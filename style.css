@@ -1,0 +1,22 @@
+html, body, .scene {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.scene {
+  background-color: #000;
+  overflow: hidden;
+}
+
+.world {
+  background-color: #222;
+  height: 100%;
+  position: relative;
+  transition: margin-left .1s;
+}
+
+.block {
+  position: absolute;
+  box-sizing: border-box;
+}
