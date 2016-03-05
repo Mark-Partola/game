@@ -14,6 +14,9 @@ html, body, .scene {
   height: 100%;
   position: relative;
   transition: margin-left .1s;
+  background-image: url(./img/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .block {
